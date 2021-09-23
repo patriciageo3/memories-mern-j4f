@@ -1,70 +1,36 @@
-# Getting Started with Create React App
+## Synopsis
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a MERN Memories / Blog website.
+It is coded just for fun (hence j4f in the title) / experimentation. 
 
-## Available Scripts
+It was created using:
 
-In the project directory, you can run:
+* React JS
+* Material-ui (styling)
+* MongoDB Atlas (persisting user data)
+* Axios (requests)
+* Netlify (deployment)
 
-### `npm start`
+## Live Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+To see the live demo, please [click here](https://memories-just-for-fun.netlify.app/).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Authors
 
-### `npm test`
+Coded by Patricia Georgescu
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Following the videos [here](https://www.youtube.com/watch?v=ngc9gnGgUdA) & [here](https://www.youtube.com/watch?v=aibtHnbeuio)
 
-### `npm run build`
+Few adjustments were done to the initial implementation as follows:
+ * [ improvement ]  Add Redux DevTool setup to connect Chrome extension to debug, if needed 
+ * [ improvement ] clean tags before submitting them & save them in separate state to properly render them as user types
+ * [ improvement ] adjust update like count for a quicker update
+ * [ fix ] click on a post to edit it, then clear the form, then click on the same post to edit it, but it won`t work because the id of the post does not get updated
+ * [ fix ] proxy link to get the call to the server right (in the initial localhost development phase)
+ * [ fix ] hashtags repopulate tag input after user clicks edit post
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## License & Copyrights
+All materials and ideas pertain to their rightful owner: Adrian Hajdin from [Javascript Mastery](https://www.youtube.com/channel/UCmXmlB4-HJytD7wek0Uo97A). This is just something I coded for fun.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Quick Live Preview
+![Alt text](src/images/memories_preview.JPG "Preview")
