@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const URL ='https://memories-just-for-fun.herokuapp.com/posts'; 
-// const URL = '/posts'
+//const URL ='https://memories-just-for-fun.herokuapp.com/posts'; 
+ const URL = '/posts'
 // notes: tutorial had this as: 'http://localhost:5000/posts', but "http://localhost:5000/" needs to go into package.json as 'proxy'
 // https://stackoverflow.com/questions/45367298/could-not-proxy-request-pusher-auth-from-localhost3000-to-http-localhost500
 // Nkoro Joseph Ahamefula answer
