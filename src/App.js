@@ -4,7 +4,7 @@ import { Container } from '@material-ui/core';
 
 import Navbar from './components/navbar/navbar'
 import Home from './components/home/home'
-import Authenticated from './components/authenticated/authenticated'
+import AuthenticationForm from './components/authenticationForm/authenticationForm'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
                 <Navbar />
                 <Switch>
                     <Route path="/" exact component={Home} />
-                    <Route path="/" component={Authenticated} />
+                    <Route path="/" component={AuthenticationForm} />
                 </Switch>
             </Container>
         </BrowserRouter> 
