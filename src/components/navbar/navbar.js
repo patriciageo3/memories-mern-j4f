@@ -1,17 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core';
 
 import useStyles from './styles';
 import memories from '../../images/memories.png';
+import { getLocalStorageItem, removeLocalStorageItem } from '../../utils'
+import { PROFILE } from '../../utils/constants'
+import { logoutUser } from '../../actions/authentication';
+import { useNavigateToHomePage } from '../../hooks'
 
-const renderLoggedInView = (styleClasses, user) => (
+const renderLoggedInView = (styleClasses, user, onLogoutClick) => (
     <div className={styleClasses.profile}>
-        <Avatar className={styleClasses.purple} alt={user.result.name} src={user.result.imageUrl}>
-            {user.result.name.charAt(0)}
+        <Avatar className={styleClasses.purple} alt={user.profile.givenName} src={user.profile.imageUrl}>
+            {user.profile.givenName}
         </Avatar>
-        <Typography className={styleClasses.userName} variant="h6">{user.result.name}</Typography>
-        <Button className={styleClasses.logout} variant="contained" color="secondary">Logout</Button>
+        <Typography className={styleClasses.userName} variant="h6">{`Hi, ${user.profile.givenName}!`}</Typography>
+        <Button className={styleClasses.logout} variant="contained" color="secondary" onClick={onLogoutClick}>Logout</Button>
     </div>
 )
 
@@ -21,8 +26,29 @@ const renderGuestView = () => (
 
 export const Navbar = () => {
     const styleClasses = useStyles();
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const redirectToHomePage = useNavigateToHomePage();
+    const [ user, setUser ] = useState(getLocalStorageItem(PROFILE));
+    console.log('user', user);
+    console.log('location', location);
 
-    const user = null;
+    useEffect(() => {
+        //const token = user?.token;
+
+        //jwt logic
+
+        setUser(getLocalStorageItem(PROFILE));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location]);
+
+    const onLogoutClick = () => {
+        dispatch(logoutUser());
+        redirectToHomePage();
+        removeLocalStorageItem(PROFILE);
+        // setUser(null); -> added n the video, but there is
+        // no need to reset this to null as the useEffect above will take care of that
+    };
 
     return (
     <AppBar className={styleClasses.appBar} position="static" color="inherit">
@@ -32,7 +58,7 @@ export const Navbar = () => {
         </div>    
         <Toolbar className={styleClasses.toolbar} >
         {
-            user ? renderLoggedInView(styleClasses, user) : renderGuestView()
+            user ? renderLoggedInView(styleClasses, user, onLogoutClick) : renderGuestView()
         }
 
         </Toolbar>    
