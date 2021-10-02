@@ -11,7 +11,7 @@ import {
     POST_MESSAGE_NAME, 
     POST_TAGS_NAME 
 } from '../../utils/constants';
-import { turnNameIntoTag } from '../../utils/utils'
+import { turnNameIntoTag } from '../../utils'
 import { createPost, updatePost } from '../../actions/posts'
 
 const INITIAL_STATE_POST_DATA = {
