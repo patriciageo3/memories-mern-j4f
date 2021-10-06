@@ -23,7 +23,7 @@ const INITIAL_STATE_POST_DATA = {
 }
     
 
-const Form = ({ currentPostId, clearCurrentPostId }) => {
+const PostsForm = ({ currentPostId, clearCurrentPostId }) => {
     const styleClasses = useStyles();
     const dispatch = useDispatch();
     const [ postData, setPostData ] = useState(INITIAL_STATE_POST_DATA);
@@ -138,4 +138,4 @@ const Form = ({ currentPostId, clearCurrentPostId }) => {
     );
 }
 
-export default Form;
+export default PostsForm;
