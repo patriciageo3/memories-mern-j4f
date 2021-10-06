@@ -1,9 +1,16 @@
 
-import { turnNameIntoTag, saveToLocalStorage, getLocalStorageItem, removeLocalStorageItem } from './utils';
+import { 
+turnNameIntoTag, 
+saveToLocalStorage,
+getLocalStorageItem, 
+removeLocalStorageItem,
+replaceSpaces 
+} from './utils';
 
 export { 
     turnNameIntoTag, 
     saveToLocalStorage, 
     getLocalStorageItem,
-    removeLocalStorageItem
+    removeLocalStorageItem,
+    replaceSpaces
 };

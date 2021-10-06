@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Container, Grow, Grid } from '@material-ui/core';
 
 import PostsContainer from '../posts/posts-container';
-import Form from '../form/form';
+import PostsForm from '../postsForm/postsForm';
 import { getPosts } from '../../actions/posts';
 import useStyles from './styles';
 
@@ -33,7 +33,7 @@ export const Home = () => {
                         <PostsContainer saveCurrentId={saveCurrentId}/>
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                        <Form currentPostId={currentId} clearCurrentPostId={clearCurrentId}/>
+                        <PostsForm currentPostId={currentId} clearCurrentPostId={clearCurrentId}/>
                     </Grid>
                 </Grid>
             </Container>

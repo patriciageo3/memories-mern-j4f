@@ -7,12 +7,40 @@ import { GoogleLogin } from 'react-google-login';
 import { Input } from '../common-components'
 import useStyles from './styles';
 import Icon from '../../images/icon'
-import { loginUser } from '../../actions/authentication'
+import { googleSignin, signup, signin } from '../../actions/authentication';
 import { useNavigateToHomePage }  from '../../hooks'; 
-import { PROFILE } from '../../utils/constants'
-import { saveToLocalStorage } from '../../utils'
+import { 
+PROFILE, 
+FIRST_NAME,
+LAST_NAME,
+EMAIL,
+PASSWORD,
+CONFIRM_PASS 
+} from '../../utils/constants';
+import { saveToLocalStorage, replaceSpaces, turnNameIntoTag } from '../../utils';
 
+/* let firstName;
+let lastName;
+let email;
+let pass;
+let confirmPass;
+const fields = [ FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, CONFIRM_PASS];
 
+fields.map(field => ) */
+
+const firstName = replaceSpaces(FIRST_NAME);
+const lastName = replaceSpaces(LAST_NAME);
+const email = replaceSpaces(EMAIL);
+const pass = replaceSpaces(PASSWORD);
+const confirmPass = replaceSpaces(CONFIRM_PASS);
+
+const INITIAL_STATE_AUTH_FORM = {
+    [ firstName ]: '',
+    [ lastName ]: '',
+    [ email ]: '',
+    [ pass ]: '',
+    [ confirmPass ]: ''
+};
 
 
 export const AuthenticationForm = () => {
@@ -21,9 +49,21 @@ export const AuthenticationForm = () => {
     const redirectToHomePage = useNavigateToHomePage();
     const [isSignup, setIsSignup] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [ formData, setFormData ] = useState(INITIAL_STATE_AUTH_FORM);
 
-    const handleSubmit = () => {};
-    const handleChange = () => {};
+    console.log('authformData', formData);
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        if (isSignup) {
+            dispatch(signup(formData, redirectToHomePage));
+        } else {
+            dispatch(signin(formData, redirectToHomePage));
+        }
+    };
+    const handleChange = event => {
+        setFormData({...formData, [event.target.name]: event.target.value})
+    };
     const handleShowPassword = () => setShowPassword(prevShowPassword => !prevShowPassword);
     const switchMode = () => {
         setIsSignup(prevSetSignup => !prevSetSignup);
@@ -35,9 +75,9 @@ export const AuthenticationForm = () => {
         const authenticationData = { profile, token };
 
         try {
-            dispatch(loginUser(authenticationData));
+            dispatch(googleSignin(authenticationData, redirectToHomePage));
             saveToLocalStorage(PROFILE, authenticationData);
-            redirectToHomePage('/');
+            redirectToHomePage();
         } catch (err) {
             console.log(err)
         }
@@ -60,16 +100,16 @@ export const AuthenticationForm = () => {
                         {
                         isSignup && (
                             <>
-                                <Input name="firstName" label="First Name" handleChange={handleChange} half />
-                                <Input name="lastName" label="Last Name" handleChange={handleChange} half />
+                                <Input name={firstName} label={turnNameIntoTag(FIRST_NAME)} value={formData[firstName]} handleChange={handleChange} half />
+                                <Input name={lastName} label={turnNameIntoTag(LAST_NAME)} value={formData[lastName]} handleChange={handleChange} half />
                             </>
                         )
                         }
 
-                        <Input name="email" label="Email Address" handleChange={handleChange} type="email" autoFocus />
-                        <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
+                        <Input name={email} label={turnNameIntoTag(EMAIL)} value={formData[email]} handleChange={handleChange} type="email" autoFocus />
+                        <Input name={pass} label={turnNameIntoTag(PASSWORD)} value={formData[pass]} handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
                         
-                        { isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> }
+                        { isSignup && <Input name={confirmPass} label={turnNameIntoTag(CONFIRM_PASS)} value={formData[confirmPass]} handleChange={handleChange} type="password" /> }
                     </Grid>    
                     <Button type="submit" fullWidth variant="contained" color="primary" className={styleClasses.submit}>
                         { isSignup ? 'Sign Up' : 'Sign In' }

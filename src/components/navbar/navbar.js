@@ -43,8 +43,7 @@ export const Navbar = () => {
     }, [location]);
 
     const onLogoutClick = () => {
-        dispatch(logoutUser());
-        redirectToHomePage();
+        dispatch(logoutUser(redirectToHomePage));
         removeLocalStorageItem(PROFILE);
         // setUser(null); -> added n the video, but there is
         // no need to reset this to null as the useEffect above will take care of that

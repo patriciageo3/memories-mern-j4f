@@ -4,6 +4,8 @@ export const turnNameIntoTag = tagName => {
     return lowerCaseTagName.charAt(0).toUpperCase() + tagName.slice(1);
 };
 
+export const replaceSpaces = text => text.replace(/\s/g, '_');
+
 export const saveToLocalStorage = (key, data) => {
     localStorage.setItem(key, JSON.stringify({ ...data }));
 };
