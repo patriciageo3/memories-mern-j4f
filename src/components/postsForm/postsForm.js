@@ -5,20 +5,18 @@ import FileBase from 'react-file-base64';
 
 import useStyles from './styles'
 import {  
-    POST_TITLE_NAME, 
-    POST_CREATOR_NAME, 
+    POST_TITLE_NAME,
     POST_FILE_NAME, 
     POST_MESSAGE_NAME, 
     POST_TAGS_NAME 
 } from '../../utils/constants';
-import { turnNameIntoTag } from '../../utils'
+import { turnNameIntoTag, getProfileFromLocalStorage } from '../../utils'
 import { createPost, updatePost } from '../../actions/posts'
 
 const INITIAL_STATE_POST_DATA = {
     [ POST_TITLE_NAME ]: '',
     [ POST_MESSAGE_NAME ]: '',
     [ POST_TAGS_NAME ]: '',
-    [ POST_CREATOR_NAME ]: '',
     [ POST_FILE_NAME ]: ''
 }
     
@@ -29,6 +27,8 @@ const PostsForm = ({ currentPostId, clearCurrentPostId }) => {
     const [ postData, setPostData ] = useState(INITIAL_STATE_POST_DATA);
     const [ tagData, setTagData ] = useState('');
     const allPosts = useSelector(state => state.posts);
+    const authData = getProfileFromLocalStorage();
+    const userName = authData?.profile?.name;
 
     useEffect(() => {
         if (currentPostId) {
@@ -65,25 +65,27 @@ const PostsForm = ({ currentPostId, clearCurrentPostId }) => {
         event.preventDefault();
         
         if (currentPostId) {
-            dispatch(updatePost(currentPostId, postData));
+            dispatch(updatePost(currentPostId, { ...postData, name: userName }));
         } else {
-            dispatch(createPost(postData));
+            dispatch(createPost({ ...postData, name: userName }));
         }
         clearData();
+    }
+
+    if (!userName) {
+        return (
+            <Paper className={styleClasses.paper}>
+            <Typography variant="h6" align="center">
+              {"Please Sign In to create your own memories and like other's memories."}
+            </Typography>
+          </Paper>
+        );
     }
     
     return (
         <Paper className={styleClasses.paper}>
             <form autoComplete="off" onSubmit={handleSubmit} noValidate className={`${styleClasses.root} ${styleClasses.form}`}>
                 <Typography variant="h6">{currentPostId ? 'Editing' : 'Creating'} a memory</Typography>
-                <TextField 
-                    name={POST_CREATOR_NAME} 
-                    variant="outlined" 
-                    label={turnNameIntoTag(POST_CREATOR_NAME)}
-                    fullWidth 
-                    value={postData[POST_CREATOR_NAME]}
-                    onChange={handleChange}
-                />
                 <TextField 
                     name={POST_TITLE_NAME} 
                     variant="outlined" 

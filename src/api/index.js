@@ -1,9 +1,20 @@
 import axios from 'axios';
 
+import { getProfileFromLocalStorage } from '../utils';
+
 //const URL ='https://memories-just-for-fun.herokuapp.com/posts'; 
  const POSTS_URL = '/posts';
  const USER_URL = '/user';
  const API = axios.create({ baseURL: 'http://localhost:5000/' });
+ API.interceptors.request.use(req => {
+    const profile = getProfileFromLocalStorage();
+
+    if (!!profile) {
+        req.headers.authorization = `Bearer ${profile.token}`;
+    }
+
+    return req;
+ });
 // notes: tutorial had this as: 'http://localhost:5000/posts', but "http://localhost:5000/" needs to go into package.json as 'proxy'
 // https://stackoverflow.com/questions/45367298/could-not-proxy-request-pusher-auth-from-localhost3000-to-http-localhost500
 // Nkoro Joseph Ahamefula answer

@@ -1,3 +1,5 @@
+import { PROFILE } from './constants';
+
 export const turnNameIntoTag = tagName => {
     const lowerCaseTagName = tagName.toLowerCase();
 
@@ -38,6 +40,8 @@ export const getLocalStorageItem = key => {
     const localStorageItem = localStorage.getItem(key);
     return JSON.parse(localStorageItem);
 };
+
+export const getProfileFromLocalStorage = () => getLocalStorageItem(PROFILE);
 
 export const removeLocalStorageItem = key => {
     localStorage.removeItem(key);
