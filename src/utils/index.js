@@ -4,13 +4,15 @@ turnNameIntoTag,
 saveToLocalStorage,
 getLocalStorageItem, 
 removeLocalStorageItem,
-replaceSpaces 
+saveProfileWithGivenName,
+formatStringToCamelCase 
 } from './utils';
 
 export { 
     turnNameIntoTag, 
     saveToLocalStorage, 
+    saveProfileWithGivenName,
     getLocalStorageItem,
     removeLocalStorageItem,
-    replaceSpaces
+    formatStringToCamelCase
 };
