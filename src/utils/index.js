@@ -2,7 +2,8 @@
 import { 
 turnNameIntoTag, 
 saveToLocalStorage,
-getLocalStorageItem, 
+getLocalStorageItem,
+getProfileFromLocalStorage, 
 removeLocalStorageItem,
 saveProfileWithGivenName,
 formatStringToCamelCase 
@@ -13,6 +14,7 @@ export {
     saveToLocalStorage, 
     saveProfileWithGivenName,
     getLocalStorageItem,
+    getProfileFromLocalStorage,
     removeLocalStorageItem,
     formatStringToCamelCase
 };

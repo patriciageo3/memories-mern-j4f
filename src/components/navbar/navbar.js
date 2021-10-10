@@ -5,8 +5,7 @@ import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core';
 
 import useStyles from './styles';
 import memories from '../../images/memories.png';
-import { getLocalStorageItem } from '../../utils'
-import { PROFILE } from '../../utils/constants'
+import { getProfileFromLocalStorage } from '../../utils'
 import { logoutUser } from '../../actions/authentication';
 import { useNavigateToHomePage } from '../../hooks'
 
@@ -29,7 +28,7 @@ export const Navbar = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const redirectToHomePage = useNavigateToHomePage();
-    const [ user, setUser ] = useState(getLocalStorageItem(PROFILE));
+    const [ user, setUser ] = useState(getProfileFromLocalStorage());
     console.log('user', user);
     console.log('location', location);
 
@@ -38,7 +37,7 @@ export const Navbar = () => {
 
         //jwt logic
 
-        setUser(getLocalStorageItem(PROFILE));
+        setUser(getProfileFromLocalStorage());
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
 
