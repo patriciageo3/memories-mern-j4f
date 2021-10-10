@@ -5,7 +5,7 @@ import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core';
 
 import useStyles from './styles';
 import memories from '../../images/memories.png';
-import { getLocalStorageItem, removeLocalStorageItem } from '../../utils'
+import { getLocalStorageItem } from '../../utils'
 import { PROFILE } from '../../utils/constants'
 import { logoutUser } from '../../actions/authentication';
 import { useNavigateToHomePage } from '../../hooks'
@@ -13,7 +13,7 @@ import { useNavigateToHomePage } from '../../hooks'
 const renderLoggedInView = (styleClasses, user, onLogoutClick) => (
     <div className={styleClasses.profile}>
         <Avatar className={styleClasses.purple} alt={user.profile.givenName} src={user.profile.imageUrl}>
-            {user.profile.givenName}
+            {user.profile.givenName.charAt(0)}
         </Avatar>
         <Typography className={styleClasses.userName} variant="h6">{`Hi, ${user.profile.givenName}!`}</Typography>
         <Button className={styleClasses.logout} variant="contained" color="secondary" onClick={onLogoutClick}>Logout</Button>
@@ -44,7 +44,6 @@ export const Navbar = () => {
 
     const onLogoutClick = () => {
         dispatch(logoutUser(redirectToHomePage));
-        removeLocalStorageItem(PROFILE);
         // setUser(null); -> added n the video, but there is
         // no need to reset this to null as the useEffect above will take care of that
     };

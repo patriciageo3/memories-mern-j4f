@@ -1,4 +1,4 @@
-import { ACTION_LOGIN_USER, ACTION_LOGOUT_USER } from '../utils/constants';
+import { ACTION_LOGIN_USER, ACTION_LOGOUT_USER, ACTION_SIGNUP_USER } from '../utils/constants';
 
 const initialState = {
     isLoggedIn: false,
@@ -8,6 +8,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case ACTION_LOGIN_USER:
+        case ACTION_SIGNUP_USER:
             return {...state, isLoggedIn: !!action?.payload?.token, user: action?.payload};
 
         case ACTION_LOGOUT_USER:

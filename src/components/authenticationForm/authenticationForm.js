@@ -9,30 +9,20 @@ import useStyles from './styles';
 import Icon from '../../images/icon'
 import { googleSignin, signup, signin } from '../../actions/authentication';
 import { useNavigateToHomePage }  from '../../hooks'; 
-import { 
-PROFILE, 
+import {  
 FIRST_NAME,
 LAST_NAME,
 EMAIL,
 PASSWORD,
 CONFIRM_PASS 
 } from '../../utils/constants';
-import { saveToLocalStorage, replaceSpaces, turnNameIntoTag } from '../../utils';
+import { formatStringToCamelCase, turnNameIntoTag } from '../../utils';
 
-/* let firstName;
-let lastName;
-let email;
-let pass;
-let confirmPass;
-const fields = [ FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, CONFIRM_PASS];
-
-fields.map(field => ) */
-
-const firstName = replaceSpaces(FIRST_NAME);
-const lastName = replaceSpaces(LAST_NAME);
-const email = replaceSpaces(EMAIL);
-const pass = replaceSpaces(PASSWORD);
-const confirmPass = replaceSpaces(CONFIRM_PASS);
+const firstName = formatStringToCamelCase(FIRST_NAME);
+const lastName = formatStringToCamelCase(LAST_NAME);
+const email = formatStringToCamelCase(EMAIL);
+const pass = formatStringToCamelCase(PASSWORD);
+const confirmPass = formatStringToCamelCase(CONFIRM_PASS);
 
 const INITIAL_STATE_AUTH_FORM = {
     [ firstName ]: '',
@@ -76,8 +66,6 @@ export const AuthenticationForm = () => {
 
         try {
             dispatch(googleSignin(authenticationData, redirectToHomePage));
-            saveToLocalStorage(PROFILE, authenticationData);
-            redirectToHomePage();
         } catch (err) {
             console.log(err)
         }
