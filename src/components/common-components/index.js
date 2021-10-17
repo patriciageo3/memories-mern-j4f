@@ -1,6 +1,8 @@
 
-import Input from './input/input'
+import Input from './input';
+import LikePost from './likePost';
 
 export {
-    Input
+    Input,
+    LikePost
 }
