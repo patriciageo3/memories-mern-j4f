@@ -29,8 +29,6 @@ export const Navbar = () => {
     const location = useLocation();
     const redirectToHomePage = useNavigateToHomePage();
     const [ user, setUser ] = useState(getProfileFromLocalStorage());
-    console.log('user', user);
-    console.log('location', location);
 
     useEffect(() => {
         //const token = user?.token;
