@@ -21,8 +21,6 @@ const Post = ({ post, saveCurrentId: saveCurrentIdParent }) => {
     const currentUserId = currentUser?.profile?._id || currentUser?.profile?.googleId;
     const isUserCreator = currentUserId === post?.creator;
 
-    console.log('selectedFile', post);
-
     const saveCurrentIdInternal = event => {
         event.preventDefault();
 

@@ -41,8 +41,6 @@ export const AuthenticationForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [ formData, setFormData ] = useState(INITIAL_STATE_AUTH_FORM);
 
-    console.log('authformData', formData);
-
     const handleSubmit = event => {
         event.preventDefault();
         if (isSignup) {
@@ -69,7 +67,6 @@ export const AuthenticationForm = () => {
         } catch (err) {
             console.log(err)
         }
-        console.log('response', res);
     };
     const googleError = (err) => {
         console.log('Google Sign In was not successful. Please try again later!');

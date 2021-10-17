@@ -39,12 +39,9 @@ const PostsForm = ({ currentPostId, clearCurrentPostId }) => {
                 setPostData(focusedPost);
                 setTagData(rawTags)
             }
-            console.log('mine focusedPost', focusedPost)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPostId])
-
-    console.log('postData Form', postData);
 
     const handleChange = event => setPostData({ ...postData, [ event.target.name ]: event.target.value})
     const handleTagChange = event => {
