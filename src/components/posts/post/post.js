@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
 
@@ -7,24 +7,43 @@ import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
-
 import { deletePost, updateLikeCount } from '../../../actions/posts';
 import { LikePost } from '../../common-components';
-import { getProfileFromLocalStorage } from '../../../utils'
+import { getProfileFromLocalStorage } from '../../../utils';
+import { useCheckIfTokenIsExpired } from '../../../hooks';
 
 import useStyles from './styles'
 
 const Post = ({ post, saveCurrentId: saveCurrentIdParent }) => {
     const styleClasses = useStyles();
     const dispatch = useDispatch();
+    const [userAction, setUserAction] = useState(false);
     const currentUser = getProfileFromLocalStorage();
+    const checkToken = useCheckIfTokenIsExpired();
     const currentUserId = currentUser?.profile?._id || currentUser?.profile?.googleId;
     const isUserCreator = currentUserId === post?.creator;
+
+    useEffect(() => {
+        checkToken()
+        setUserAction(false)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userAction]);
 
     const saveCurrentIdInternal = event => {
         event.preventDefault();
 
-        saveCurrentIdParent(post._id)
+        saveCurrentIdParent(post._id);
+        setUserAction(true);
+    }
+
+    const onLikeClick = () => {
+        dispatch(updateLikeCount(post));
+        setUserAction(true);
+    }
+
+    const onDeleteClick = () => {
+        dispatch(deletePost(post._id));
+        setUserAction(true);
     }
     
     return (
@@ -51,12 +70,12 @@ const Post = ({ post, saveCurrentId: saveCurrentIdParent }) => {
                 <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
             </CardContent>
             <CardActions className={styleClasses.cardActions}>
-                <Button size="small" color="primary" disabled={!currentUser?.token} onClick={() => dispatch(updateLikeCount(post))}> 
-                <LikePost post={post} currentUserId={currentUserId}/>
+                <Button size="small" color="primary" disabled={!currentUser?.token} onClick={onLikeClick}> 
+                <LikePost post={post} currentUserId={currentUserId} />
                 </Button>
                 {
                     isUserCreator && (
-                        <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}>
+                        <Button size="small" color="primary" onClick={onDeleteClick}>
                             <DeleteIcon fontSize="small" /> 
                             Delete
                         </Button>

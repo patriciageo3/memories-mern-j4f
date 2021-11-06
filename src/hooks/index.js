@@ -1,6 +1,7 @@
-import { useNavigateTo, useNavigateToHomePage } from './hooks';
+import { useNavigateTo, useNavigateToHomePage, useCheckIfTokenIsExpired } from './hooks';
 
 export  { 
     useNavigateTo, 
-    useNavigateToHomePage 
+    useNavigateToHomePage ,
+    useCheckIfTokenIsExpired
 };

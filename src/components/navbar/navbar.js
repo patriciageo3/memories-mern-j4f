@@ -7,7 +7,7 @@ import useStyles from './styles';
 import memories from '../../images/memories.png';
 import { getProfileFromLocalStorage } from '../../utils'
 import { logoutUser } from '../../actions/authentication';
-import { useNavigateToHomePage } from '../../hooks'
+import { useNavigateToHomePage } from '../../hooks';
 
 const renderLoggedInView = (styleClasses, user, onLogoutClick) => (
     <div className={styleClasses.profile}>
@@ -28,20 +28,17 @@ export const Navbar = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const redirectToHomePage = useNavigateToHomePage();
-    const [ user, setUser ] = useState(getProfileFromLocalStorage());
+    const userInfo = getProfileFromLocalStorage();
+    const [ user, setUser ] = useState(userInfo);
 
     useEffect(() => {
-        //const token = user?.token;
-
-        //jwt logic
-
-        setUser(getProfileFromLocalStorage());
+        setUser(userInfo);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
 
     const onLogoutClick = () => {
         dispatch(logoutUser(redirectToHomePage));
-        // setUser(null); -> added n the video, but there is
+        // setUser(null); -> added in the video, but there is
         // no need to reset this to null as the useEffect above will take care of that
     };
 
