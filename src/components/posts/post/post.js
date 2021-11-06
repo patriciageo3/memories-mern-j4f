@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import moment from 'moment';
-import decode from 'jwt-decode';
 
 import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core/';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -11,8 +10,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { deletePost, updateLikeCount } from '../../../actions/posts';
 import { LikePost } from '../../common-components';
 import { getProfileFromLocalStorage } from '../../../utils';
-import { logoutUser } from '../../../actions/authentication';
-import { useNavigateToHomePage } from '../../../hooks';
+import { useCheckIfTokenIsExpired } from '../../../hooks';
 
 import useStyles from './styles'
 
@@ -21,21 +19,12 @@ const Post = ({ post, saveCurrentId: saveCurrentIdParent }) => {
     const dispatch = useDispatch();
     const [userAction, setUserAction] = useState(false);
     const currentUser = getProfileFromLocalStorage();
-    const redirectToHomePage = useNavigateToHomePage();
+    const checkToken = useCheckIfTokenIsExpired();
     const currentUserId = currentUser?.profile?._id || currentUser?.profile?.googleId;
     const isUserCreator = currentUserId === post?.creator;
 
     useEffect(() => {
-        const token = currentUser?.token;
-           
-        if (token) {
-            const decodedToken = decode(token);
-            const tokenIsExpired = decodedToken.exp * 1000 < new Date().getTime();
-
-            if (tokenIsExpired) {
-                dispatch(logoutUser(redirectToHomePage));
-            }
-        }
+        checkToken()
         setUserAction(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userAction]);

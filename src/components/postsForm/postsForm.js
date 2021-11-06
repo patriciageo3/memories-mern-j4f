@@ -12,6 +12,7 @@ import {
 } from '../../utils/constants';
 import { turnNameIntoTag, getProfileFromLocalStorage } from '../../utils'
 import { createPost, updatePost } from '../../actions/posts'
+import { useCheckIfTokenIsExpired } from '../../hooks';
 
 const INITIAL_STATE_POST_DATA = {
     [ POST_TITLE_NAME ]: '',
@@ -26,9 +27,11 @@ const PostsForm = ({ currentPostId, clearCurrentPostId }) => {
     const dispatch = useDispatch();
     const [ postData, setPostData ] = useState(INITIAL_STATE_POST_DATA);
     const [ tagData, setTagData ] = useState('');
+    const [ userAction, setUserAction ] = useState(false);
     const allPosts = useSelector(state => state.posts);
     const authData = getProfileFromLocalStorage();
     const userName = authData?.profile?.name;
+    const checkToken = useCheckIfTokenIsExpired();
 
     useEffect(() => {
         if (currentPostId) {
@@ -41,7 +44,13 @@ const PostsForm = ({ currentPostId, clearCurrentPostId }) => {
             }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPostId])
+    }, [currentPostId]);
+
+    useEffect(() => {
+        checkToken();
+        setUserAction(false)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userAction]);
 
     const handleChange = event => setPostData({ ...postData, [ event.target.name ]: event.target.value})
     const handleTagChange = event => {
@@ -57,6 +66,7 @@ const PostsForm = ({ currentPostId, clearCurrentPostId }) => {
         setPostData(INITIAL_STATE_POST_DATA);
         setTagData('');
         clearCurrentPostId();
+        setUserAction(true);
     }
     const handleSubmit = event => {
         event.preventDefault();
@@ -66,7 +76,7 @@ const PostsForm = ({ currentPostId, clearCurrentPostId }) => {
         } else {
             dispatch(createPost({ ...postData, name: userName }));
         }
-        clearData();
+        clearData();  
     }
 
     if (!userName) {
