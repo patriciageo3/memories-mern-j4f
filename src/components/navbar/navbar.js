@@ -11,16 +11,30 @@ import { useNavigateToHomePage } from '../../hooks';
 
 const renderLoggedInView = (styleClasses, user, onLogoutClick) => (
     <div className={styleClasses.profile}>
-        <Avatar className={styleClasses.purple} alt={user.profile.givenName} src={user.profile.imageUrl}>
+        <Avatar className={styleClasses.purple} alt={user.profile.givenName} src={user.profile.imageUrl} data-auto-id="profile-avatar">
             {user.profile.givenName.charAt(0)}
         </Avatar>
-        <Typography className={styleClasses.userName} variant="h6">{`Hi, ${user.profile.givenName}!`}</Typography>
-        <Button className={styleClasses.logout} variant="contained" color="secondary" onClick={onLogoutClick}>Logout</Button>
+        <Typography 
+            className={styleClasses.userName} 
+            variant="h6" 
+            data-auto-id="profile-greeting"
+        >
+            {`Hi, ${user.profile.givenName}!`}
+        </Typography>
+        <Button 
+            className={styleClasses.logout} 
+            variant="contained" 
+            color="secondary" 
+            onClick={onLogoutClick} 
+            data-auto-id="profile-logout"
+        >
+            Logout
+        </Button>
     </div>
 )
 
 const renderGuestView = () => (
-    <Button component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
+    <Button component={Link} to="/auth" variant="contained" color="primary" data-auto-id="profile-sign-in">Sign In</Button>
 )
 
 export const Navbar = () => {
@@ -43,12 +57,20 @@ export const Navbar = () => {
     };
 
     return (
-    <AppBar className={styleClasses.appBar} position="static" color="inherit">
+    <AppBar className={styleClasses.appBar} position="static" color="inherit" data-auto-id='memories-header'>
         <div className={styleClasses.brandContainer}>   
-            <Typography component={Link} to="/" className={styleClasses.heading} variant="h2" align="center">Memories</Typography>
-            <img className={styleClasses.image} src={memories} height="60" alt="Memories-logo" width="60" />
+            <Typography 
+                component={Link} 
+                to="/" 
+                className={styleClasses.heading} 
+                variant="h2" align="center" 
+                data-auto-id="memories-title"
+            >
+                Memories
+            </Typography>
+            <img className={styleClasses.image} src={memories} height="60" alt="Memories-logo" width="60" data-auto-id="memories-logo" />
         </div>    
-        <Toolbar className={styleClasses.toolbar} >
+        <Toolbar className={styleClasses.toolbar} data-auto-id="memories-menu" >
         {
             user ? renderLoggedInView(styleClasses, user, onLogoutClick) : renderGuestView()
         }
