@@ -74,7 +74,7 @@ export const AuthenticationForm = () => {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" data-auto-id="auth-form-container">
             <Paper className={styleClasses.paper} elevation={3}>
                 <Avatar className={styleClasses.avatar}>
                     <LockOutlinedIcon />
@@ -96,7 +96,7 @@ export const AuthenticationForm = () => {
                         
                         { isSignup && <Input name={confirmPass} label={turnNameIntoTag(CONFIRM_PASS)} value={formData[confirmPass]} handleChange={handleChange} type="password" /> }
                     </Grid>    
-                    <Button type="submit" fullWidth variant="contained" color="primary" className={styleClasses.submit}>
+                    <Button type="submit" fullWidth variant="contained" color="primary" className={styleClasses.submit} data-auto-id="auth-form-submit-cta">
                         { isSignup ? 'Sign Up' : 'Sign In' }
                     </Button>
                     <Grid container justify="center">
@@ -113,9 +113,9 @@ export const AuthenticationForm = () => {
                         onFailure={googleError}
                         cookiePolicy="single_host_origin"
                      />
-                    <Grid container justify="flex-end">
+                    <Grid container justify="flex-end" data-auto-id="auth-form-switch-container">
                         <Grid item>
-                            <Typography component="h5">
+                            <Typography component="h5" data-auto-id="auth-form-switch-description">
                                 { isSignup ? 'Already have an account?' : "Don't have an account?" }
                                 <Button onClick={switchMode}>
                                     { isSignup ? 'Sign in' : "Sign Up" }
