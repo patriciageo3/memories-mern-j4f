@@ -14,23 +14,39 @@ export const useNavigateTo = () => {
 export const useNavigateToHomePage = () => {
         const navigate = useNavigateTo();
         return () => navigate('/');
-}
+};
 
-export const useCheckIfTokenIsExpired = () => {
+export const useLogoutAndRedirectHomePage = () => {
         const redirectToHomePage = useNavigateToHomePage();
         const dispatch = useDispatch();
+
+        return () =>  dispatch(logoutUser(redirectToHomePage));
+};
+
+export const useCheckIfTokenIsExpired = () => {
         const currentUser = getProfileFromLocalStorage();
         const token = currentUser?.token;
+        const res = { tokenExpired: false, tokenExists: true };
         
-        return () => {
-                if (token) {
-                        const decodedToken = decode(token);
-                        const tokenIsExpired = decodedToken.exp * 1000 < new Date().getTime();
+        if (token) {
+                const decodedToken = decode(token);
+                const tokenIsExpired = decodedToken.exp * 1000 < new Date().getTime();
 
-                        if (tokenIsExpired) {
-                                dispatch(logoutUser(redirectToHomePage));
-                        }
+                if (tokenIsExpired) {
+                        res.tokenExpired = true;
                 }
+        } else {
+                res.tokenExpired = false;
+                res.tokenExists = false;
         }
+
+        return res;
+};
+
+export const useLogoutAndRedirectIfTokenIsExpired = () => {
+        const { tokenExpired, tokenExists } = useCheckIfTokenIsExpired();
+        const logoutRedirectHomePage = useLogoutAndRedirectHomePage();
+        
+        return () => (tokenExpired || !tokenExists) && logoutRedirectHomePage();
        
-}
+};

@@ -4,7 +4,7 @@ import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { GoogleLogin } from 'react-google-login';
 
-import { Input } from '../common-components'
+import { Input, WithAuthPolicy } from '../common-components'
 import useStyles from './styles';
 import Icon from '../../images/icon'
 import { googleSignin, signup, signin } from '../../actions/authentication';
@@ -130,4 +130,12 @@ export const AuthenticationForm = () => {
     );
 }
 
-export default AuthenticationForm;
+export const AuthenticationFormWithAuthPolicy = () => {
+    return (
+        <WithAuthPolicy> 
+            <AuthenticationForm/> 
+        </WithAuthPolicy>
+    );
+}
+
+export default AuthenticationFormWithAuthPolicy;

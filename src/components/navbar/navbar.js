@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core';
 
 import useStyles from './styles';
 import memories from '../../images/memories.png';
 import { getProfileFromLocalStorage } from '../../utils'
-import { logoutUser } from '../../actions/authentication';
-import { useNavigateToHomePage } from '../../hooks';
+import { useLogoutAndRedirectHomePage } from '../../hooks';
 
 const renderLoggedInView = (styleClasses, user, onLogoutClick) => (
     <div className={styleClasses.profile}>
@@ -39,10 +37,9 @@ const renderGuestView = () => (
 
 export const Navbar = () => {
     const styleClasses = useStyles();
-    const dispatch = useDispatch();
     const location = useLocation();
-    const redirectToHomePage = useNavigateToHomePage();
     const userInfo = getProfileFromLocalStorage();
+    const logoutAndRedirectHomePage = useLogoutAndRedirectHomePage()
     const [ user, setUser ] = useState(userInfo);
 
     useEffect(() => {
@@ -51,7 +48,7 @@ export const Navbar = () => {
     }, [location]);
 
     const onLogoutClick = () => {
-        dispatch(logoutUser(redirectToHomePage));
+        logoutAndRedirectHomePage();
         // setUser(null); -> added in the video, but there is
         // no need to reset this to null as the useEffect above will take care of that
     };

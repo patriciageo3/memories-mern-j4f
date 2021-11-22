@@ -50,5 +50,5 @@ export const logoutUser = redirectToHomePage => dispatch =>  {
         type: ACTION_LOGOUT_USER
     });
     removeLocalStorageItem(PROFILE);
-    redirectToHomePage();
+    redirectToHomePage && redirectToHomePage();
 }

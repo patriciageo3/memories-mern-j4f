@@ -12,7 +12,7 @@ import {
 } from '../../utils/constants';
 import { turnNameIntoTag, getProfileFromLocalStorage } from '../../utils'
 import { createPost, updatePost } from '../../actions/posts'
-import { useCheckIfTokenIsExpired } from '../../hooks';
+import { useLogoutAndRedirectIfTokenIsExpired } from '../../hooks';
 
 const INITIAL_STATE_POST_DATA = {
     [ POST_TITLE_NAME ]: '',
@@ -32,7 +32,7 @@ const PostsForm = ({ currentPostId, clearCurrentPostId }) => {
     const allPosts = useSelector(state => state.posts);
     const authData = getProfileFromLocalStorage();
     const userName = authData?.profile?.name;
-    const checkToken = useCheckIfTokenIsExpired();
+    const checkTokenAndLogout = useLogoutAndRedirectIfTokenIsExpired();
 
     useEffect(() => {
         if (currentPostId) {
@@ -48,7 +48,7 @@ const PostsForm = ({ currentPostId, clearCurrentPostId }) => {
     }, [currentPostId]);
 
     useEffect(() => {
-        checkToken();
+        checkTokenAndLogout();
         setUserAction(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userAction]);
