@@ -6,7 +6,8 @@ getLocalStorageItem,
 getProfileFromLocalStorage, 
 removeLocalStorageItem,
 saveProfileWithGivenName,
-formatStringToCamelCase 
+formatStringToCamelCase,
+checkIfTokenExpired
 } from './utils';
 
 export { 
@@ -16,5 +17,6 @@ export {
     getLocalStorageItem,
     getProfileFromLocalStorage,
     removeLocalStorageItem,
-    formatStringToCamelCase
+    formatStringToCamelCase,
+    checkIfTokenExpired
 };

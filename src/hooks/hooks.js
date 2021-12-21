@@ -1,8 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import decode from 'jwt-decode';
 
-import { getProfileFromLocalStorage } from '../utils';
+import { getProfileFromLocalStorage, checkIfTokenExpired } from '../utils';
 import { logoutUser } from '../actions/authentication';
 
 export const useNavigateTo = () => {
@@ -27,10 +26,9 @@ export const useCheckIfTokenIsExpired = () => {
         const currentUser = getProfileFromLocalStorage();
         const token = currentUser?.token;
         const res = { tokenExpired: false, tokenExists: true };
-        
+     
         if (token) {
-                const decodedToken = decode(token);
-                const tokenIsExpired = decodedToken.exp * 1000 < new Date().getTime();
+                const tokenIsExpired = checkIfTokenExpired(token);
 
                 if (tokenIsExpired) {
                         res.tokenExpired = true;

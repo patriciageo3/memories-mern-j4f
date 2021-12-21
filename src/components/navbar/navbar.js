@@ -38,11 +38,11 @@ const renderGuestView = () => (
 export const Navbar = () => {
     const styleClasses = useStyles();
     const location = useLocation();
-    const userInfo = getProfileFromLocalStorage();
     const logoutAndRedirectHomePage = useLogoutAndRedirectHomePage()
-    const [ user, setUser ] = useState(userInfo);
+    const [ user, setUser ] = useState(null);
 
     useEffect(() => {
+        const userInfo = getProfileFromLocalStorage();
         setUser(userInfo);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);

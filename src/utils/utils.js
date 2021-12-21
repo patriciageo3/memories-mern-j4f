@@ -1,3 +1,4 @@
+import decode from 'jwt-decode';
 import { PROFILE } from './constants';
 
 export const turnNameIntoTag = tagName => {
@@ -46,3 +47,8 @@ export const getProfileFromLocalStorage = () => getLocalStorageItem(PROFILE);
 export const removeLocalStorageItem = key => {
     localStorage.removeItem(key);
 };
+
+export const checkIfTokenExpired = token => {
+    const decodedToken = decode(token);
+    return decodedToken.exp * 1000 < new Date().getTime();
+}
